@@ -30,7 +30,9 @@ while getopts "t:" opt; do
   esac
 done
 
-if [[ ${USE_HOST_MOUNT_TOOLS} -eq 1 ]]; then
+if [[ ${USE_NIXOS} -eq 1 ]]; then
+  chroot /host /run/current-system/sw/bin/umount "${@:1}"
+elif [[ ${USE_HOST_MOUNT_TOOLS} -eq 1 ]]; then
   chroot /host /usr/bin/env -i PATH="/usr/sbin:/usr/bin:/sbin:/bin" umount "${@:1}"
 else
   /usr/bin/env -i PATH="/usr/sbin:/usr/bin:/sbin:/bin" umount "${@:1}"

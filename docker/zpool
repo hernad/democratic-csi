@@ -1,3 +1,7 @@
 #!/bin/bash
 
-chroot /host /usr/bin/env -i PATH="/usr/sbin:/usr/bin:/sbin:/bin" zpool "${@:1}"
+if [[ ${USE_NIXOS} -eq 1 ]]; then
+  chroot /host /run/current-system/sw/bin/zpool "${@:1}"
+else 
+  chroot /host /usr/bin/env -i PATH="/usr/sbin:/usr/bin:/sbin:/bin" zpool "${@:1}"
+fi
