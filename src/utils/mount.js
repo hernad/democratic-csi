@@ -98,6 +98,7 @@ class Mount {
 
     try {
       result = await mount.exec(mount.options.paths.findmnt, args);
+      console.log(`pathIsMounted ${path} result=${result}`);
     } catch (err) {
       // no results
       if (err.code == 1) {

@@ -678,6 +678,7 @@ class CsiBaseDriver {
       case NODE_OS_DRIVER_POSIX:
         // csi spec stipulates that staging_target_path is a directory even for block mounts
         result = await filesystem.pathExists(staging_target_path);
+        console.log("mkdir1: %s", staging_target_path);
         if (!result) {
           await filesystem.mkdir(staging_target_path, ["-p", "-m", "0750"]);
         }
@@ -1481,6 +1482,7 @@ class CsiBaseDriver {
             result = await mount.deviceIsMountedAtPath("dev", block_path);
             if (!result) {
               result = await filesystem.pathExists(staging_target_path);
+              console.log("mkdir2: %s", staging_target_path);
               if (!result) {
                 await filesystem.mkdir(staging_target_path, [
                   "-p",
@@ -2314,6 +2316,7 @@ class CsiBaseDriver {
           normalized_staging_path = block_path;
         } else {
           result = await mount.pathIsMounted(staging_target_path);
+          console.log(`checkpoint10 ${staging_target_path} result=${result}`);
           if (result) {
             let device = await mount.getMountPointDevice(staging_target_path);
             result = await filesystem.isBlockDevice(device);
@@ -2848,6 +2851,7 @@ class CsiBaseDriver {
               case "mount":
                 // ensure directory exists
                 result = await filesystem.pathExists(target_path);
+                console.log("mkdir3: %s", target_path);
                 if (!result) {
                   await filesystem.mkdir(target_path, ["-p", "-m", "0750"]);
                 }
@@ -2857,6 +2861,7 @@ class CsiBaseDriver {
                 // ensure target_path directory exists as target path should be a file
                 let target_dir = await filesystem.dirname(target_path);
                 result = await filesystem.pathExists(target_dir);
+                console.log("mkdir4: %s", target_dir);
                 if (!result) {
                   await filesystem.mkdir(target_dir, ["-p", "-m", "0750"]);
                 }
