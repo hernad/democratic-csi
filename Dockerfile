@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y python make cmake gcc g++
 # install node
 RUN apt-get update && apt-get install -y wget xz-utils
 ADD docker/node-installer.sh /usr/local/sbin
-RUN chmod +x /usr/local/sbin/node-installer.sh && node-installer.sh
+RUN /bin/chmod +x /usr/local/sbin/node-installer.sh && node-installer.sh
 ENV PATH=/usr/local/lib/nodejs/bin:$PATH
 
 # Run as a non-root user
@@ -85,29 +85,29 @@ RUN apt-get update && \
 
 # install wrappers
 ADD docker/iscsiadm /usr/local/sbin
-RUN chmod +x /usr/local/sbin/iscsiadm
+RUN /bin/chmod +x /usr/local/sbin/iscsiadm
 
 ADD docker/multipath /usr/local/sbin
-RUN chmod +x /usr/local/sbin/multipath
+RUN /bin/chmod +x /usr/local/sbin/multipath
 
 ## USE_HOST_MOUNT_TOOLS=1
 ADD docker/mount /usr/local/bin/mount
-RUN chmod +x /usr/local/bin/mount
+RUN /bin/chmod +x /usr/local/bin/mount
 
 ADD docker/chmod /usr/local/bin/chmod
-RUN chmod +x /usr/local/bin/chmod
+RUN /bin/chmod +x /usr/local/bin/chmod
 
 
 ## USE_HOST_MOUNT_TOOLS=1
 ADD docker/umount /usr/local/bin/umount
-RUN chmod +x /usr/local/bin/umount
+RUN /bin/chmod +x /usr/local/bin/umount
 
 ADD docker/zfs /usr/local/bin/zfs
-RUN chmod +x /usr/local/bin/zfs
+RUN /bin/chmod +x /usr/local/bin/zfs
 ADD docker/zpool /usr/local/bin/zpool
-RUN chmod +x /usr/local/bin/zpool
+RUN /bin/chmod +x /usr/local/bin/zpool
 ADD docker/oneclient /usr/local/bin/oneclient
-RUN chmod +x /usr/local/bin/oneclient
+RUN /bin/chmod +x /usr/local/bin/oneclient
 
 # Run as a non-root user
 RUN useradd --create-home csi \
