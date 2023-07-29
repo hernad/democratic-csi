@@ -94,6 +94,10 @@ RUN chmod +x /usr/local/sbin/multipath
 ADD docker/mount /usr/local/bin/mount
 RUN chmod +x /usr/local/bin/mount
 
+ADD docker/chmod /usr/local/bin/chmod
+RUN chmod +x /usr/local/bin/chmod
+
+
 ## USE_HOST_MOUNT_TOOLS=1
 ADD docker/umount /usr/local/bin/umount
 RUN chmod +x /usr/local/bin/umount
