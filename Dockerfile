@@ -94,8 +94,9 @@ RUN /bin/chmod +x /usr/local/sbin/multipath
 ADD docker/mount /usr/local/bin/mount
 RUN /bin/chmod +x /usr/local/bin/mount
 
-ADD docker/chmod /usr/local/bin/chmod
-RUN /bin/chmod +x /usr/local/bin/chmod
+# ovo ne treba u scenariju node/controller
+#ADD docker/chmod /usr/local/bin/chmod
+#RUN /bin/chmod +x /usr/local/bin/chmod
 
 
 ## USE_HOST_MOUNT_TOOLS=1
