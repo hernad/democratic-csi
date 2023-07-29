@@ -500,7 +500,8 @@ class ControllerZfsBaseDriver extends CsiBaseDriver {
     const driver = this;
     const execClient = this.getExecClient();
 
-    let command = execClient.buildCommand("chmod", [mode, path]);
+    this.ctx.logger.debug(`chmod mode = ${mode}, path = ${path} dodajem /host path`);
+    let command = execClient.buildCommand("chmod", [mode, "/host" + path]);
     if ((await driver.getWhoAmI()) != "root") {
       command = (await driver.getSudoPath()) + " " + command;
     }

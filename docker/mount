@@ -30,6 +30,7 @@ while getopts "t:" opt; do
   esac
 done
 
+echo "USE_NIXOS=${USE_NIXOS}  mount parametri ${@:1}" >> /tmp/mount.debug
 
 if [[ ${USE_NIXOS} -eq 1 ]]; then
   chroot /host /run/current-system/sw/bin/mount "${@:1}"
