@@ -678,10 +678,10 @@ class CsiBaseDriver {
       case NODE_OS_DRIVER_POSIX:
         // csi spec stipulates that staging_target_path is a directory even for block mounts
         result = await filesystem.pathExists(staging_target_path);
-        console.log("mkdir1: %s", staging_target_path);
-        if (!result) {
+        console.log(`===== mkdir1: ${staging_target_path} result=${result}`);
+        //if (!result) {
           await filesystem.mkdir(staging_target_path, ["-p", "-m", "0750"]);
-        }
+        //}
 
         // get the `device` set
         switch (node_attach_driver) {
@@ -1210,13 +1210,20 @@ class CsiBaseDriver {
             result = result[`${volume_context.zfs_asset_name}`];
             switch (result.type.value) {
               case "filesystem":
-                if (result.mountpoint.value != "legacy") {
-                  // zfs set mountpoint=legacy <dataset>
-                  // zfs inherit mountpoint <dataset>
-                  await zb.zfs.set(`${volume_context.zfs_asset_name}`, {
-                    mountpoint: "legacy",
-                  });
-                }
+                /*
+
+                  ne koristim legacy, nego zfsutil option
+                  mount -t zfs -o zfsutil tank1/nomad/data/v18 /local/x/z
+                  (sinonim za zfs mount)
+
+                  if (result.mountpoint.value != "legacy") {
+                    // zfs set mountpoint=legacy <dataset>
+                    // zfs inherit mountpoint <dataset>
+                    await zb.zfs.set(`${volume_context.zfs_asset_name}`, {
+                      mountpoint: "legacy",
+                    });
+                  }
+                */
                 device = `${volume_context.zfs_asset_name}`;
                 if (!fs_type) {
                   fs_type = "zfs";
