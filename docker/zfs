@@ -1,3 +1,5 @@
 #!/bin/bash
 
+# always run host binary
+
 chroot /host /run/current-system/sw/bin/zfs "${@:1}"

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 container_supported_filesystems=(
   "ext2"
   "ext3"
@@ -17,6 +18,23 @@ container_supported_filesystems=(
   "bind"
 )
 
+while getopts "t:" opt; do
+  case "$opt" in
+    t)
+      if [[ "x${USE_HOST_MOUNT_TOOLS}" == "x" ]]; then
+        [[ "${OPTARG,,}" == "zfs" ]] && USE_HOST_MOUNT_TOOLS=1
+        [[ "${OPTARG,,}" == "lustre" ]] && USE_HOST_MOUNT_TOOLS=1
+        [[ "${OPTARG,,}" == "onedata" ]] && USE_HOST_MOUNT_TOOLS=1
+        #(printf '%s\0' "${container_supported_filesystems[@]}" | grep -Fqxz -- "${OPTARG}") || USE_HOST_MOUNT_TOOLS=1
+      fi
+      ;;
+  esac
+done
 
-chroot /host /run/current-system/sw/bin/mount "${@:1}"
- 
+if [[ ${USE_HOST_MOUNT_TOOLS} -eq 1 ]]; then
+  #chroot /host /usr/bin/env -i PATH="/usr/sbin:/usr/bin:/sbin:/bin" mount "${@:1}"
+  chroot /host /run/current-system/sw/bin/mount "${@:1}"
+else
+ # lokalni mount
+  /usr/bin/env -i PATH="/usr/sbin:/usr/bin:/sbin:/bin" mount "${@:1}"
+fi

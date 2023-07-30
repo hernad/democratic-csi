@@ -1,3 +1,0 @@
-#!/bin/bash
-
-chroot /host /run/current-system/sw/bin/chmod "${@:1}"
